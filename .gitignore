@@ -1,0 +1,13 @@
+# Diretórios de compilação do Colcon
+build/
+install/
+log/
+
+# Arquivos de cache do Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Arquivos de backup de editores
+*~
+*.swp

@@ -40,11 +40,107 @@
       <name>ground_plane</name>
       <pose>0 0 0 0 0 0</pose>
     </include>
-    <include>
-      <uri>file:///root/.gz/fuel/fuel.gazebosim.org/kronton/models/track1/1</uri>
-      <name>black_line_track</name>
-      <pose>-3 -1 0 0 0 0</pose>
-    </include>
+    <model name="yellow_line_track">
+        <static>true</static>
+        <link name="track_link">
+            <!-- Main outer loop -->
+            <visual name="base_horizontal">
+                <pose>5 0 0.0001 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>10.2 0.2 0.0001</size>
+                    </box>
+                    <!-- 10m long base -->
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="right_vertical">
+                <pose>10 5 0.0001 0 0 1.5708</pose>
+                <geometry>
+                    <box>
+                        <size>10.2 0.2 0.0001</size>
+                    </box>
+                    <!-- 10m tall right side -->
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="top_horizontal">
+                <pose>7 10 0.0001 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>6.2 0.2 0.0001</size>
+                    </box>
+                    <!-- 6m top section -->
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <!-- New inner complexity -->
+            <visual name="inner_vertical1">
+                <pose>4 8.5 0.0001 0 0 1.5708</pose>
+                <geometry>
+                    <box>
+                        <size>3.2 0.2 0.0001</size>
+                    </box>
+                    <!-- First inner vertical -->
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="inner_horizontal">
+		<pose>5.5 7 0.01 0 0 0</pose>
+		<geometry>
+		  <box><size>3 0.2 0.0001</size></box> <!-- Inner cross connector -->
+		</geometry>
+		<material><ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse></material>
+	      </visual>
+
+	      <visual name="inner_vertical2">
+		<pose>7 5.5 0.0001 0 0 1.5708</pose>
+		<geometry>
+		  <box><size>3 0.2 0.0001</size></box> <!-- Second inner vertical -->
+		</geometry>
+		<material><ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse></material>
+	      </visual>
+	
+           
+           
+            <visual name="lower_horizontal">
+                <pose>3.5 4 0.0001 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>7.2 0.2 0.0001</size>
+                    </box>
+                    <!-- Lower return path -->
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="final_vertical">
+                <pose>0 2 0.0001 0 0 1.5708</pose>
+                <geometry>
+                    <box>
+                        <size>4.2 0.2 0.0001</size>
+                    </box>
+                    <!-- Final vertical closure -->
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <!-- Additional decorative elements -->
+           
+        </link>
+        <pose>-3 -1 0 0 0 0</pose>
+      </model>
+    
     <light name='sun' type='directional'>
       <pose>0 0 10 0 0 0</pose>
       <cast_shadows>true</cast_shadows>

@@ -17,6 +17,8 @@ setup(
         # IMPORTANTE: Garante que os arquivos da pasta 'worlds' e 'modelos' sejam instalados
         (os.path.join('share', package_name, 'worlds'), glob(os.path.join('worlds', '*.sdf'))),
         (os.path.join('share', package_name, 'models', 'turtlebot3_burger_vermelho'), glob(os.path.join('models', 'turtlebot3_burger_vermelho', '*'))),
+        (os.path.join('share', package_name, 'models', 'track1'), glob(os.path.join('models', 'track1', '*'))),
+        (os.path.join('share', package_name, 'scripts'), glob(os.path.join('scripts', '*.sh'))),
     ],
     install_requires=['setuptools'],
     zip_safe=True,

@@ -105,7 +105,8 @@ class TurtleController(Node):
             #Guarda a ultima orientação para proximos giros
             #last_angle_rad=self.current_angle 
             self.move_robot(distance,0.2)
-
+        
+        self.get_logger().info('Caminho finalizado')
 
     def turn_to_angle(self,target_angle_degrees, angle_speed=0.1):
         """Gira o robo para o angulo desejado em graus absolutos(YAW) sem usar PID"""

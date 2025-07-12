@@ -7,20 +7,24 @@ from launch.actions import ExecuteProcess, RegisterEventHandler, TimerAction
 from launch.event_handlers import OnProcessStart
 from geometry_msgs.msg import Quaternion
 import tf_transformations
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
 
 def generate_launch_description():
+
     pkg_name = 'turtlebot3_ufba'
     pkg_share_turtlebot3_ufba = get_package_share_directory(pkg_name)
+
+    declare_control_arg = DeclareLaunchArgument(
+        'control',
+        default_value='N',
+        description='Especifica qual controle será usado (N-Normal (default) ou P-PID)'
+    )
     
     # Caminho para o nosso mundo vazio
     world_path = os.path.join(pkg_share_turtlebot3_ufba, 'worlds', 'track.sdf')
 
-    # Ação para iniciar o Gazebo com o mundo VAZIO, ignorando a tela de início
-    gazebo = ExecuteProcess(
-        cmd=['gz', 'sim', '-r', world_path],
-        output='screen',
-        name='gazebo'
-    )
+    
  
     # --- A NOVA AÇÃO PARA COMANDAR A CÂMERA ---
     # Pose: {X:0, Y:0, Z:10, Roll:0, Pitch:1.57, Yaw:-1.57}
@@ -34,20 +38,26 @@ def generate_launch_description():
     set_camera_pose = ExecuteProcess(
         cmd=['gz', 'service', '-s', '/gui/move_to/pose', '--reqtype', 'gz.msgs.GUICamera', '--reptype','gz.msgs.Boolean',
              '-r',
-             'name: "box", pose: {position: {x: 1,y: 4,z: 10}, orientation: {x: ' + str(x_q) + ', y: ' + str(y_q) + ', z: ' + str(z_q) + ', w: ' + str(w_q) + '}}, projection_type: "orbit"' 
+             'name: "box", pose: {position: {x: 2,y: 2,z: 6}, orientation: {x: ' + str(x_q) + ', y: ' + str(y_q) + ', z: ' + str(z_q) + ', w: ' + str(w_q) + '}}, projection_type: "orbit"' 
             ],
         output='screen'
     )
 
     
-    pkg_share_turtlebot3_gazebo = get_package_share_directory('turtlebot3_gazebo')
-    #robot_sdf_path = os.path.join(pkg_share_turtlebot3_gazebo, 'models', 'turtlebot3_burger', 'model.sdf')
+    #pkg_share_turtlebot3_gazebo = get_package_share_directory('turtlebot3_gazebo')
     robot_sdf_path = os.path.join(pkg_share_turtlebot3_ufba, 'models', 'turtlebot3_burger_vermelho', 'model.sdf')
+    
+    # Ação para iniciar o Gazebo com o mundo VAZIO, ignorando a tela de início
+    gazebo = ExecuteProcess(
+        cmd=['gz', 'sim', '-r', world_path],
+        output='screen',
+        name='gazebo'
+    )
     
     spawn_robot = Node(
         package='ros_gz_sim',
         executable='create',
-        arguments=['-file', robot_sdf_path, '-name', 'turtlebot3_burger', '-x', '-3.0', '-y', '-1.0', '-z', '0.0'],
+        arguments=['-file', robot_sdf_path, '-name', 'turtlebot3_burger', '-x', '0.0', '-y', '0.0', '-z', '0.0'],
         output='screen'
     )
 
@@ -62,20 +72,21 @@ def generate_launch_description():
         package=pkg_name,
         executable='turtle_controller',
         name='turtle_controller_node',
-        output='screen'
+        output='screen',
+        arguments=['--control', LaunchConfiguration('control')]
     )
     
-    # Gatilho: espera o processo 'gazebo' iniciar, aguarda 2s e então cria TUDO
+    # Gatilho: espera o processo 'gazebo' iniciar, aguarda 5s e então cria TUDO
     spawn_trigger = RegisterEventHandler(
         event_handler=OnProcessStart(
             target_action=gazebo,
             on_start=[
                 TimerAction(
-                    period=2.0,
+                    period=5.0,
                      actions=[set_camera_pose]
                 ),
                 TimerAction(
-                    period=2.0,
+                    period=5.0,
                     actions=[
                         spawn_robot,
                         bridge,
@@ -88,6 +99,7 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        declare_control_arg,
         gazebo,
         spawn_trigger
     ])

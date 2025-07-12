@@ -40,96 +40,168 @@
       <name>ground_plane</name>
       <pose>0 0 0 0 0 0</pose>
     </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/jfrascon/models/Euro_pallet_w_stacked_boxes</uri>
+      <name>pallet2</name>
+      <pose>3.4 3.7 0 0 0 0</pose>
+    </include>
+     <include>
+      <uri>https://fuel.gazebosim.org/1.0/jfrascon/models/Euro_pallet_w_stacked_boxes</uri>
+      <name>pallet1</name>
+      <pose>3.4 2.4 0 0 0 0</pose>
+    </include>
+     <include>
+      <uri>https://fuel.gazebosim.org/1.0/jfrascon/models/Euro_pallet_w_stacked_boxes</uri>
+      <name>pallet3</name>
+      <pose>3.8 1.29 0 0 0 1.57</pose>
+    </include>
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/jfrascon/models/Euro_pallet_w_stacked_boxes</uri>
+      <name>pallet4</name>
+      <pose>0.578 2.326 0 0 0 1.57</pose>
+    </include>
+
+    <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction Cone</uri>
+      <name>cone1</name>
+      <pose>2.9 -0.2 0 0 0 0</pose>
+    </include>
+
+     <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Construction Cone</uri>
+      <name>cone_final</name>
+      <pose>4.7 4.5 0 0 0 0</pose>
+    </include>
+
     <model name="yellow_line_track">
         <static>true</static>
         <link name="track_link">
-            <!-- Main outer loop -->
-            <visual name="base_horizontal">
-                <pose>5 0 0.0001 0 0 0</pose>
-                <geometry>
-                    <box>
-                        <size>10.2 0.2 0.0001</size>
-                    </box>
-                    <!-- 10m long base -->
-                </geometry>
-                <material>
-                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
-                </material>
-            </visual>
-            <visual name="right_vertical">
-                <pose>10 5 0.0001 0 0 1.5708</pose>
-                <geometry>
-                    <box>
-                        <size>10.2 0.2 0.0001</size>
-                    </box>
-                    <!-- 10m tall right side -->
-                </geometry>
-                <material>
-                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
-                </material>
-            </visual>
-            <visual name="top_horizontal">
-                <pose>7 10 0.0001 0 0 0</pose>
-                <geometry>
-                    <box>
-                        <size>6.2 0.2 0.0001</size>
-                    </box>
-                    <!-- 6m top section -->
-                </geometry>
-                <material>
-                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
-                </material>
-            </visual>
-            <!-- New inner complexity -->
-            <visual name="inner_vertical1">
-                <pose>4 8.5 0.0001 0 0 1.5708</pose>
-                <geometry>
-                    <box>
-                        <size>3.2 0.2 0.0001</size>
-                    </box>
-                    <!-- First inner vertical -->
-                </geometry>
-                <material>
-                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
-                </material>
-            </visual>
-            <visual name="inner_horizontal">
-		<pose>5.5 7 0.01 0 0 0</pose>
-		<geometry>
-		  <box><size>3 0.2 0.0001</size></box> <!-- Inner cross connector -->
-		</geometry>
-		<material><ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse></material>
-	      </visual>
 
-	      <visual name="inner_vertical2">
-		<pose>7 5.5 0.0001 0 0 1.5708</pose>
-		<geometry>
-		  <box><size>3 0.2 0.0001</size></box> <!-- Second inner vertical -->
-		</geometry>
-		<material><ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse></material>
-	      </visual>
-	
-           
-           
-            <visual name="lower_horizontal">
-                <pose>3.5 4 0.0001 0 0 0</pose>
+          <visual name="segmento1">
+                <pose>1.021 0 0 0 0 0</pose>
                 <geometry>
                     <box>
-                        <size>7.2 0.2 0.0001</size>
+                        <size>2.041 0.2 0.0001</size>
                     </box>
-                    <!-- Lower return path -->
+                  
                 </geometry>
                 <material>
                     <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
                 </material>
             </visual>
-            <visual name="final_vertical">
-                <pose>0 2 0.0001 0 0 1.5708</pose>
+            <visual name="segmento2">
+                <pose>2.339 0.339 0 0 0 0.785</pose>
                 <geometry>
                     <box>
-                        <size>4.2 0.2 0.0001</size>
+                        <size>1.041 0.2 0.0001</size>
                     </box>
-                    <!-- Final vertical closure -->
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="segmento3">
+                <pose>3.04 0.375 0 0 0 -0.785</pose>
+                <geometry>
+                    <box>
+                        <size>1.141 0.2 0.0001</size>
+                    </box>
+                  
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="segmento4">
+                <pose> 3.894 0 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>1.041 0.2 0.0001</size>
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="segmento5">
+                <pose>4.414 1.45 0 0 0 1.57</pose>
+                <geometry>
+                    <box>
+                        <size>3.10 0.2 0.0001</size>
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="segmento6">
+                <pose>3.444 3 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>2.141 0.2 0.0001</size>
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="segmento7">
+                <pose>1.707 2.293 0 0 0 0.785</pose>
+                <geometry>
+                    <box>
+                        <size>2.083 0.2 0.0001</size>
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="segmento8">
+		        <pose>0.521 1.586 0 0 0 0</pose>
+                <geometry>
+                <box><size>1.041 0.2 0.0001</size></box> <!-- Inner cross connector -->
+                </geometry>
+                <material><ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse></material>
+	        </visual>
+	        <visual name="segmento9">
+                <pose>0 2.336 0 0 0 1.57</pose>
+                <geometry>
+                    <box>
+                        <size>1.70 0.2 0.0001</size>
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="segmento10">
+                <pose>0.521 3.086 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>1.041 0.2 0.0001</size>
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="segmento11">
+                <pose>1.707 3.793 0 0 0 0.785</pose>
+                <geometry>
+                    <box>
+                        <size>2.083 0.2 0.0001</size>
+                    </box>
+                </geometry>
+                <material>
+                    <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
+                </material>
+            </visual>
+            <visual name="segmento12">
+                <pose>3.394 4.5 0 0 0 0</pose>
+                <geometry>
+                    <box>
+                        <size>2.041 0.2 0.0001</size>
+                    </box>
                 </geometry>
                 <material>
                     <ambient>1 1 0 1</ambient><diffuse>1 1 0 1</diffuse>
@@ -138,7 +210,7 @@
             <!-- Additional decorative elements -->
            
         </link>
-        <pose>-3 -1 0 0 0 0</pose>
+        <pose>0 0 0 0 0 0</pose>
       </model>
     
     <light name='sun' type='directional'>

@@ -30,6 +30,7 @@ setup(
     entry_points={
         'console_scripts': [
             'turtle_controller = turtlebot3_ufba.turtle_node:main',
+            'turtle_lqr_controller = turtlebot3_ufba.turtle_lqr_node:main',
         ],
     },
 )

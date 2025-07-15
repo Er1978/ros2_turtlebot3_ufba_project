@@ -11,3 +11,6 @@ __pycache__/
 # Arquivos de backup de editores
 *~
 *.swp
+
+# Arquivos de configuração de IDEs
+.vscode/

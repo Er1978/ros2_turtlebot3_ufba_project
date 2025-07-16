@@ -200,32 +200,65 @@ class TurtleLQRController(Node):
         self.get_logger().info('Robô direcionado')
 
     def move_robot(self, target_distance, linear_speed=0.2):
-        """Move o robô para frente por uma distância específica e depois pára."""
-        linear_speed=min(linear_speed,0.2)
+        
+        linear_speed = min(linear_speed, 0.2)
         if self.is_moving:
-            self.get_logger().warn('Robô em deslocamento.')
+            self.get_logger().warn('Robô já está em deslocamento.')
             return
+
         self.is_moving = True
+    
+    # --- NOVO: Captura da posição e orientação iniciais ---
         start_position = self.current_position
+        initial_angle = self.current_angle  # O ângulo que queremos manter
         distance_traveled = 0.0
-        self.get_logger().info(f'Iniciando movimento. Distância a percorrer: {target_distance:.2f}m a {linear_speed:.2f}m/s.')
+
+        # --- NOVO: Instanciação do controlador LQR para orientação ---
+        # Usamos os mesmos ganhos do controle de rotação, que são bons para essa tarefa
+        Q = np.array([[10.0]])  # Custo do erro de estado (quão importante é ter erro zero)
+        R = np.array([[1.0]])   # Custo do esforço de controle (quão "caro" é usar o motor)
+        orientation_lqr = LQRController(Q, R)
+    
+        self.get_logger().info(f'Iniciando movimento com LQR. Distância: {target_distance:.2f}m, Mantendo ângulo: {math.degrees(initial_angle):.2f}°')
+    
         twist_msg = Twist()
-        twist_msg.linear.x = linear_speed
+    
         while distance_traveled < target_distance:
+            rclpy.spin_once(self) # Atualiza a odometria (self.current_position e self.current_angle)
+        
+            # --- LÓGICA DE CONTROLE LQR ---
+            #    1. Calcular o erro de orientação
+            # Usamos (atual - alvo) para ser compatível com a lei de controle u = -Kx
+            angle_error = self.normalize_angle(self.current_angle - initial_angle)
+        
+            # 2. Obter a velocidade angular corretiva do LQR
+            angular_speed_correction = orientation_lqr.update(angle_error)
+        
+            # 3. Definir ambas as velocidades no comando
+            twist_msg.linear.x = linear_speed
+            twist_msg.angular.z = angular_speed_correction
+        
             self.publisher_.publish(twist_msg)
-            rclpy.spin_once(self)
+
+            # --- LÓGICA DE DISTÂNCIA (inalterada) ---
             if self.current_position:
                 distance_traveled = math.sqrt(
                     (self.current_position.x - start_position.x)**2 +
                     (self.current_position.y - start_position.y)**2
                 )
-            self.get_logger().info(f'Distância percorrida: {distance_traveled:.2f}m', throttle_duration_sec=1)
+        
+            # Log aprimorado
+            self.get_logger().info(
+                f'Dist: {distance_traveled:.2f}m | Erro Ângulo: {math.degrees(angle_error):.2f}° | Correção ω: {angular_speed_correction:.3f} rad/s',
+                throttle_duration_sec=1
+            )
+
         self.stop_robot()
         self.get_logger().info(f'Distância de {target_distance:.2f}m atingida.')
         self.is_moving = False
 
     def stop_robot(self):
-        """Pára o robô enviando um sinal zerado"""
+        
         stop_msg = Twist()
         stop_msg.linear.x = 0.0
         stop_msg.angular.z = 0.0
